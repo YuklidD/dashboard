@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: haas-frontend
+  namespace: haas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: haas-frontend
+  template:
+    metadata:
+      labels:
+        app: haas-frontend
+    spec:
+      containers:
+      - name: haas-frontend
+        image: haas-frontend:latest
+        ports:
+        - containerPort: 80

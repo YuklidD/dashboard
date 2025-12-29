@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: haas-backend
+  namespace: haas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: haas-backend
+  template:
+    metadata:
+      labels:
+        app: haas-backend
+    spec:
+      containers:
+      - name: haas-backend
+        image: haas-backend:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://postgres:password@postgres:5432/haas_db"
+        - name: SECRET_KEY
+          value: "your-secret-key-here"

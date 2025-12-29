@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Reflected XSS Challenge</h1>
+<div class="card">
+    <p>Search for a product. The search term is reflected back to you.</p>
+    <form method="GET" action="/xss">
+        <input type="text" name="q" placeholder="Search..." value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if query %}
+    <div class="alert">
+        <!-- Vulnerable: query is marked as safe to allow XSS if WAF is bypassed -->
+        Results for: {{ query | safe }}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

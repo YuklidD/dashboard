@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAF Protected Vulnerable App</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1e1e1e; color: #c0c0c0; margin: 0; padding: 0; }
+        nav { background-color: #2d2d2d; padding: 1rem; border-bottom: 2px solid #007acc; }
+        nav a { color: #ffffff; text-decoration: none; margin-right: 1.5rem; font-weight: bold; }
+        nav a:hover { color: #007acc; }
+        .container { padding: 2rem; max-width: 800px; margin: 0 auto; }
+        h1 { color: #007acc; }
+        .card { background-color: #252526; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem; border: 1px solid #3e3e42; }
+        input[type="text"], input[type="password"] { width: 100%; padding: 10px; margin: 10px 0; background-color: #3e3e42; border: 1px solid #555; color: white; border-radius: 4px; }
+        button { background-color: #007acc; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #005a9e; }
+        .alert { padding: 10px; background-color: #4d4d4d; border-left: 5px solid #007acc; margin-top: 10px; }
+        .success { border-left-color: #4caf50; }
+        .danger { border-left-color: #f44336; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/">Dashboard</a>
+        <a href="/sqli">SQL Injection</a>
+        <a href="/xss">XSS</a>
+        <a href="/ssti">SSTI</a>
+    </nav>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

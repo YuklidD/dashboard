@@ -1,0 +1,42 @@
+Kali WAF Bypass Detection Utility
+---------------------------------
+Models loaded successfully: waf_bypass_detector_complete.pkl, waf_feature_extractor.pkl
+
+--- DEBUG INFO ---
+Scaler expected features (102):
+['enc_url_encoding_count', 'enc_url_encoding_present', 'enc_unicode_count', 'enc_unicode_present', 'enc_hex_encoding_count', 'enc_hex_encoding_present', 'enc_hex_escape_count', 'enc_hex_escape_present', 'enc_octal_encoding_count', 'enc_octal_encoding_present', 'enc_html_entity_count', 'enc_html_entity_present', 'enc_double_encoding_count', 'enc_double_encoding_present', 'enc_layers', 'enc_multi_layer', 'obf_comment_injection_count', 'obf_comment_hash_count', 'obf_whitespace_abuse_count', 'obf_null_bytes_count', 'obf_null_bytes_hex_count', 'obf_concatenation_count', 'obf_concat_keyword_count', 'payload_entropy', 'charset_mixed', 'case_variation', 'kw_sqli_union', 'kw_obf_sqli_union', 'kw_sqli_select', 'kw_obf_sqli_select', 'kw_sqli_insert', 'kw_obf_sqli_insert', 'kw_sqli_delete', 'kw_obf_sqli_delete', 'kw_sqli_drop', 'kw_obf_sqli_drop', 'kw_sqli_update', 'kw_obf_sqli_update', 'kw_sqli_exec', 'kw_obf_sqli_exec', 'kw_sqli_execute', 'kw_obf_sqli_execute', 'kw_sqli_from', 'kw_obf_sqli_from', 'kw_sqli_where', 'kw_obf_sqli_where', 'kw_xss_script', 'kw_obf_xss_script', 'kw_xss_alert', 'kw_obf_xss_alert', 'kw_xss_onerror', 'kw_obf_xss_onerror', 'kw_xss_onload', 'kw_obf_xss_onload', 'kw_xss_eval', 'kw_obf_xss_eval', 'kw_xss_iframe', 'kw_obf_xss_iframe', 'kw_xss_svg', 'kw_obf_xss_svg', 'kw_xss_img', 'kw_obf_xss_img', 'kw_xss_onclick', 'kw_obf_xss_onclick', 'kw_xss_onmouseover', 'kw_obf_xss_onmouseover', 'kw_path_traversal_etc/passwd', 'kw_obf_path_traversal_etc/passwd', 'kw_path_traversal_win.ini', 'kw_obf_path_traversal_win.ini', 'kw_path_traversal_dotdot', 'kw_obf_path_traversal_dotdot', 'kw_command_injection_cat', 'kw_obf_command_injection_cat', 'kw_command_injection_ls', 'kw_obf_command_injection_ls', 'kw_command_injection_wget', 'kw_obf_command_injection_wget', 'kw_command_injection_curl', 'kw_obf_command_injection_curl', 'kw_command_injection_bash', 'kw_obf_command_injection_bash', 'path_dotdot_present', 'path_encoded_present', 'length', 'word_count', 'special_char_ratio', 'digit_ratio', 'alpha_ratio', 'char_60', 'char_62', 'char_34', 'char_39', 'char_59', 'char_47', 'char_92', 'char_40', 'char_41', 'char_123', 'char_125', 'char_91', 'char_93']
+Script X_train_columns (102):
+Missing in script: set()
+Extra in script: set()
+ORDER MISMATCH DETECTED!
+--- END DEBUG INFO ---
+
+
+--- Running Example Tests ---
+
+Analyzing payload: GET /index.html HTTP/1.1
+Traceback (most recent call last):
+  File "/home/howler/waf/waf_bypass.py", line 389, in <module>
+    predict_payload_kali("GET /index.html HTTP/1.1") # Benign
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/howler/waf/waf_bypass.py", line 366, in predict_payload_kali
+    prediction, probability_array = detector.predict(features_df)
+                                    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/howler/waf/waf_bypass.py", line 250, in predict
+    X_scaled = self.scaler.transform(X)
+  File "/home/howler/waf/venv/lib/python3.13/site-packages/sklearn/utils/_set_output.py", line 316, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+  File "/home/howler/waf/venv/lib/python3.13/site-packages/sklearn/preprocessing/_data.py", line 1045, in transform
+    X = self._validate_data(
+        X,
+    ...<5 lines>...
+        force_all_finite="allow-nan",
+    )
+  File "/home/howler/waf/venv/lib/python3.13/site-packages/sklearn/base.py", line 608, in _validate_data
+    self._check_feature_names(X, reset=reset)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/howler/waf/venv/lib/python3.13/site-packages/sklearn/base.py", line 535, in _check_feature_names
+    raise ValueError(message)
+ValueError: The feature names should match those that were passed during fit.
+Feature names must be in the same order as they were in fit.
+

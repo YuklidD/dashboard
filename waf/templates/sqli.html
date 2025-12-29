@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>SQL Injection Challenge</h1>
+<div class="card">
+    <p>Login as <strong>admin</strong>. You don't know the password.</p>
+    <form method="POST" action="/sqli">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" placeholder="admin">
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Password">
+
+        <button type="submit">Login</button>
+    </form>
+
+    {% if message %}
+    <div class="alert {{ 'success' if success else 'danger' }}">
+        {{ message }}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

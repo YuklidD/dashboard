@@ -1,0 +1,1024 @@
+Kali WAF Bypass Detection Utility
+---------------------------------
+
+============================================================
+🔥 KALI WAF PROXY STARTED 🔥
+Listening on http://0.0.0.0:5000
+Send traffic from sqlmap, nmap, nikto, etc. to this port.
+Detailed detection logs will appear below.
+============================================================
+
+ * Serving Flask app 'waf_proxy'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.8.146:5000
+[33mPress CTRL+C to quit[0m
+
+============================================================
+Incoming Request: GET /hello
+------------------------------------------------------------
+
+Analyzing payload: GET /hello HTTP/1.1
+Host: localhost:5000
+Accept: */*
+User-Agent: <script>alert('XSS')</script>
+
+
+Models loaded successfully: waf_bypass_detector_complete.pkl, waf_feature_extractor.pkl
+
+🚨 DETECTED: ATTACK/BYPASS | Confidence: 76.01%
+Key extracted features (non-zero):
+  - payload_entropy: 4.9435667735595485
+  - charset_mixed: 1
+  - case_variation: 0.5333333333333333
+  - kw_obf_sqli_select: 1
+  - kw_xss_script: 1
+  - kw_obf_xss_script: 1
+  - kw_xss_alert: 1
+  - kw_obf_xss_alert: 1
+  - kw_obf_command_injection_cat: 1
+  - kw_obf_command_injection_ls: 1
+  - length: 96
+  - special_char_ratio: 0.3125
+  - digit_ratio: 0.0625
+  - alpha_ratio: 0.625
+------------------------------------------------------------
+🚫 ACTION: BLOCKED | Confidence: 76.01%
+============================================================
+
+127.0.0.1 - - [21/Dec/2025 12:40:59] "[31m[1mGET /hello HTTP/1.1[0m" 403 -
+
+============================================================
+Incoming Request: GET /hello
+------------------------------------------------------------
+
+Analyzing payload: GET /hello HTTP/1.1
+Host: localhost:5000
+User-Agent: curl/8.15.0
+Accept: */*
+
+
+
+✅ BENIGN TRAFFIC | Confidence: 86.34%
+Key extracted features (non-zero):
+  - payload_entropy: 4.723242328708861
+  - charset_mixed: 1
+  - case_variation: 0.5
+  - kw_obf_command_injection_cat: 1
+  - kw_obf_command_injection_ls: 1
+  - kw_command_injection_curl: 1
+  - kw_obf_command_injection_curl: 1
+  - length: 78
+  - special_char_ratio: 0.3076923076923077
+  - digit_ratio: 0.1282051282051282
+  - alpha_ratio: 0.5641025641025641
+------------------------------------------------------------
+✅ ACTION: ALLOWED | Confidence: 86.34%
+============================================================
+
+127.0.0.1 - - [21/Dec/2025 12:42:41] "GET /hello HTTP/1.1" 200 -
+
+============================================================
+Incoming Request: GET /hello
+------------------------------------------------------------
+
+Analyzing payload: GET /hello HTTP/1.1
+Host: localhost:5000
+Connection: keep-alive
+Sec-Ch-Ua: "Brave";v="141", "Not?A_Brand";v="8", "Chromium";v="141"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Linux"
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8
+Sec-Gpc: 1
+Accept-Language: en-GB,en;q=0.5
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br, zstd
+Cookie: __test=1
+
+
+
+🚨 DETECTED: ATTACK/BYPASS | Confidence: 13.64%
+Key extracted features (non-zero):
+  - obf_concatenation_count: 1
+  - payload_entropy: 5.484977396190194
+  - charset_mixed: 1
+  - case_variation: 0.6683168316831684
+  - kw_obf_sqli_insert: 1
+  - kw_obf_sqli_exec: 1
+  - kw_obf_sqli_where: 1
+  - kw_obf_xss_alert: 1
+  - kw_obf_xss_svg: 1
+  - kw_obf_xss_img: 1
+  - kw_command_injection_cat: 1
+  - kw_obf_command_injection_cat: 1
+  - kw_obf_command_injection_ls: 1
+  - kw_obf_command_injection_curl: 1
+  - length: 621
+  - special_char_ratio: 0.2721417069243156
+  - digit_ratio: 0.07729468599033816
+  - alpha_ratio: 0.6505636070853462
+------------------------------------------------------------
+🚫 ACTION: BLOCKED | Confidence: 13.64%
+============================================================
+
+127.0.0.1 - - [21/Dec/2025 12:42:52] "[31m[1mGET /hello HTTP/1.1[0m" 403 -
+
+============================================================
+Incoming Request: GET /favicon.ico
+------------------------------------------------------------
+
+Analyzing payload: GET /favicon.ico HTTP/1.1
+Host: localhost:5000
+Connection: keep-alive
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Brave";v="141", "Not?A_Brand";v="8", "Chromium";v="141"
+Sec-Ch-Ua-Mobile: ?0
+Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+Sec-Gpc: 1
+Accept-Language: en-GB,en;q=0.5
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: no-cors
+Sec-Fetch-Dest: image
+Referer: http://localhost:5000/hello
+Accept-Encoding: gzip, deflate, br, zstd
+Cookie: __test=1
+
+
+
+🚨 DETECTED: ATTACK/BYPASS | Confidence: 83.08%
+Key extracted features (non-zero):
+  - obf_comment_injection_count: 1
+  - obf_concatenation_count: 1
+  - payload_entropy: 5.472984680846945
+  - charset_mixed: 1
+  - case_variation: 0.6684491978609626
+  - kw_obf_sqli_exec: 1
+  - kw_obf_sqli_where: 1
+  - kw_obf_xss_alert: 1
+  - kw_obf_xss_eval: 1
+  - kw_xss_svg: 1
+  - kw_obf_xss_svg: 1
+  - kw_obf_xss_img: 1
+  - kw_obf_command_injection_cat: 1
+  - kw_obf_command_injection_ls: 1
+  - kw_obf_command_injection_curl: 1
+  - length: 587
+  - special_char_ratio: 0.28109028960817717
+  - digit_ratio: 0.0817717206132879
+  - alpha_ratio: 0.637137989778535
+------------------------------------------------------------
+🚫 ACTION: BLOCKED | Confidence: 83.08%
+============================================================
+
+127.0.0.1 - - [21/Dec/2025 12:42:52] "[31m[1mGET /favicon.ico HTTP/1.1[0m" 403 -
+
+============================================================
+Incoming Request: GET /hello
+------------------------------------------------------------
+
+Analyzing payload: GET /hello HTTP/1.1
+Host: localhost:5000
+User-Agent: curl/8.15.0
+Accept: */*
+
+
+
+✅ BENIGN TRAFFIC | Confidence: 86.34%
+Key extracted features (non-zero):
+  - payload_entropy: 4.723242328708861
+  - charset_mixed: 1
+  - case_variation: 0.5
+  - kw_obf_command_injection_cat: 1
+  - kw_obf_command_injection_ls: 1
+  - kw_command_injection_curl: 1
+  - kw_obf_command_injection_curl: 1
+  - length: 78
+  - special_char_ratio: 0.3076923076923077
+  - digit_ratio: 0.1282051282051282
+  - alpha_ratio: 0.5641025641025641
+------------------------------------------------------------
+✅ ACTION: ALLOWED | Confidence: 86.34%
+============================================================
+
+127.0.0.1 - - [21/Dec/2025 12:43:10] "GET /hello HTTP/1.1" 200 -
+
+============================================================
+Incoming Request: GET /
+------------------------------------------------------------
+
+Analyzing payload: GET / HTTP/1.1
+Host: localhost:5000
+Connection: keep-alive
+Sec-Ch-Ua: "Brave";v="141", "Not?A_Brand";v="8", "Chromium";v="141"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Linux"
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8
+Sec-Gpc: 1
+Accept-Language: en-GB,en;q=0.5
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br, zstd
+Cookie: __test=1
+
+
+
+🚨 DETECTED: ATTACK/BYPASS | Confidence: 13.88%
+Key extracted features (non-zero):
+  - obf_concatenation_count: 1
+  - payload_entropy: 5.48976655459336
+  - charset_mixed: 1
+  - case_variation: 0.6641604010025063
+  - kw_obf_sqli_insert: 1
+  - kw_obf_sqli_exec: 1
+  - kw_obf_sqli_where: 1
+  - kw_obf_xss_alert: 1
+  - kw_obf_xss_svg: 1
+  - kw_obf_xss_img: 1
+  - kw_command_injection_cat: 1
+  - kw_obf_command_injection_cat: 1
+  - kw_obf_command_injection_ls: 1
+  - kw_obf_command_injection_curl: 1
+  - length: 616
+  - special_char_ratio: 0.27435064935064934
+  - digit_ratio: 0.07792207792207792
+  - alpha_ratio: 0.6477272727272727
+------------------------------------------------------------
+🚫 ACTION: BLOCKED | Confidence: 13.88%
+============================================================
+
+127.0.0.1 - - [21/Dec/2025 12:45:02] "[31m[1mGET / HTTP/1.1[0m" 403 -
+
+============================================================
+Incoming Request: GET /favicon.ico
+------------------------------------------------------------
+
+Analyzing payload: GET /favicon.ico HTTP/1.1
+Host: localhost:5000
+Connection: keep-alive
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Brave";v="141", "Not?A_Brand";v="8", "Chromium";v="141"
+Sec-Ch-Ua-Mobile: ?0
+Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+Sec-Gpc: 1
+Accept-Language: en-GB,en;q=0.5
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: no-cors
+Sec-Fetch-Dest: image
+Referer: http://localhost:5000/
+Accept-Encoding: gzip, deflate, br, zstd
+Cookie: __test=1
+
+
+
+🚨 DETECTED: ATTACK/BYPASS | Confidence: 82.86%
+Key extracted features (non-zero):
+  - obf_comment_injection_count: 1
+  - obf_concatenation_count: 1
+  - payload_entropy: 5.477571137817656
+  - charset_mixed: 1
+  - case_variation: 0.6639566395663956
+  - kw_obf_sqli_exec: 1
+  - kw_obf_sqli_where: 1
+  - kw_obf_xss_alert: 1
+  - kw_obf_xss_eval: 1
+  - kw_xss_svg: 1
+  - kw_obf_xss_svg: 1
+  - kw_obf_xss_img: 1
+  - kw_obf_command_injection_cat: 1
+  - kw_obf_command_injection_ls: 1
+  - kw_obf_command_injection_curl: 1
+  - length: 582
+  - special_char_ratio: 0.28350515463917525
+  - digit_ratio: 0.08247422680412371
+  - alpha_ratio: 0.634020618556701
+------------------------------------------------------------
+🚫 ACTION: BLOCKED | Confidence: 82.86%
+============================================================
+
+127.0.0.1 - - [21/Dec/2025 12:45:02] "[31m[1mGET /favicon.ico HTTP/1.1[0m" 403 -
+
+============================================================
+Incoming Request: GET /indrx.html
+------------------------------------------------------------
+
+Analyzing payload: GET /indrx.html HTTP/1.1
+Host: localhost:5000
+Connection: keep-alive
+Sec-Ch-Ua: "Brave";v="141", "Not?A_Brand";v="8", "Chromium";v="141"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Linux"
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8
+Sec-Gpc: 1
+Accept-Language: en-GB,en;q=0.5
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br, zstd
+Cookie: __test=1
+
+
+
+🚨 DETECTED: ATTACK/BYPASS | Confidence: 14.04%
+Key extracted features (non-zero):
+  - obf_concatenation_count: 1
+  - payload_entropy: 5.489821785329903
+  - charset_mixed: 1
+  - case_variation: 0.6715686274509803
+  - kw_obf_sqli_insert: 1
+  - kw_obf_sqli_exec: 1
+  - kw_obf_sqli_where: 1
+  - kw_obf_xss_alert: 1
+  - kw_obf_xss_svg: 1
+  - kw_obf_xss_img: 1
+  - kw_command_injection_cat: 1
+  - kw_obf_command_injection_cat: 1
+  - kw_obf_command_injection_ls: 1
+  - kw_obf_command_injection_curl: 1
+  - length: 626
+  - special_char_ratio: 0.2715654952076677
+  - digit_ratio: 0.07667731629392971
+  - alpha_ratio: 0.6517571884984026
+------------------------------------------------------------
+🚫 ACTION: BLOCKED | Confidence: 14.04%
+============================================================
+
+127.0.0.1 - - [21/Dec/2025 12:45:12] "[31m[1mGET /indrx.html HTTP/1.1[0m" 403 -
+
+============================================================
+Incoming Request: GET /favicon.ico
+------------------------------------------------------------
+
+Analyzing payload: GET /favicon.ico HTTP/1.1
+Host: localhost:5000
+Connection: keep-alive
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Brave";v="141", "Not?A_Brand";v="8", "Chromium";v="141"
+Sec-Ch-Ua-Mobile: ?0
+Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+Sec-Gpc: 1
+Accept-Language: en-GB,en;q=0.5
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: no-cors
+Sec-Fetch-Dest: image
+Referer: http://localhost:5000/indrx.html
+Accept-Encoding: gzip, deflate, br, zstd
+Cookie: __test=1
+
+
+
+🚨 DETECTED: ATTACK/BYPASS | Confidence: 83.14%
+Key extracted features (non-zero):
+  - obf_comment_injection_count: 1
+  - obf_concatenation_count: 1
+  - payload_entropy: 5.479948294240377
+  - charset_mixed: 1
+  - case_variation: 0.671957671957672
+  - kw_obf_sqli_exec: 1
+  - kw_obf_sqli_from: 1
+  - kw_obf_sqli_where: 1
+  - kw_obf_xss_alert: 1
+  - kw_obf_xss_eval: 1
+  - kw_xss_svg: 1
+  - kw_obf_xss_svg: 1
+  - kw_obf_xss_img: 1
+  - kw_obf_command_injection_cat: 1
+  - kw_obf_command_injection_ls: 1
+  - kw_obf_command_injection_curl: 1
+  - length: 592
+  - special_char_ratio: 0.28040540540540543
+  - digit_ratio: 0.08108108108108109
+  - alpha_ratio: 0.6385135135135135
+------------------------------------------------------------
+🚫 ACTION: BLOCKED | Confidence: 83.14%
+============================================================
+
+127.0.0.1 - - [21/Dec/2025 12:45:12] "[31m[1mGET /favicon.ico HTTP/1.1[0m" 403 -
+
+============================================================
+Incoming Request: GET /indrx.html
+------------------------------------------------------------
+
+Analyzing payload: GET /indrx.html HTTP/1.1
+Host: localhost:5000
+Connection: keep-alive
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Brave";v="141", "Not?A_Brand";v="8", "Chromium";v="141"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Linux"
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8
+Sec-Gpc: 1
+Accept-Language: en-GB,en;q=0.5
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br, zstd
+Cookie: __test=1
+
+
+
+🚨 DETECTED: ATTACK/BYPASS | Confidence: 14.07%
+Key extracted features (non-zero):
+  - obf_concatenation_count: 1
+  - payload_entropy: 5.4745162297088985
+  - charset_mixed: 1
+  - case_variation: 0.676056338028169
+  - kw_obf_sqli_insert: 1
+  - kw_obf_sqli_exec: 1
+  - kw_obf_sqli_where: 1
+  - kw_obf_xss_alert: 1
+  - kw_obf_xss_svg: 1
+  - kw_obf_xss_img: 1
+  - kw_command_injection_cat: 1
+  - kw_obf_command_injection_cat: 1
+  - kw_obf_command_injection_ls: 1
+  - kw_obf_command_injection_curl: 1
+  - length: 651
+  - special_char_ratio: 0.27035330261136714
+  - digit_ratio: 0.07526881720430108
+  - alpha_ratio: 0.6543778801843319
+------------------------------------------------------------
+🚫 ACTION: BLOCKED | Confidence: 14.07%
+============================================================
+
+127.0.0.1 - - [21/Dec/2025 12:45:16] "[31m[1mGET /indrx.html HTTP/1.1[0m" 403 -
+
+============================================================
+Incoming Request: GET /favicon.ico
+------------------------------------------------------------
+
+Analyzing payload: GET /favicon.ico HTTP/1.1
+Host: localhost:5000
+Connection: keep-alive
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Brave";v="141", "Not?A_Brand";v="8", "Chromium";v="141"
+Sec-Ch-Ua-Mobile: ?0
+Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+Sec-Gpc: 1
+Accept-Language: en-GB,en;q=0.5
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: no-cors
+Sec-Fetch-Dest: image
+Referer: http://localhost:5000/indrx.html
+Accept-Encoding: gzip, deflate, br, zstd
+Cookie: __test=1
+
+
+
+🚨 DETECTED: ATTACK/BYPASS | Confidence: 83.14%
+Key extracted features (non-zero):
+  - obf_comment_injection_count: 1
+  - obf_concatenation_count: 1
+  - payload_entropy: 5.479948294240377
+  - charset_mixed: 1
+  - case_variation: 0.671957671957672
+  - kw_obf_sqli_exec: 1
+  - kw_obf_sqli_from: 1
+  - kw_obf_sqli_where: 1
+  - kw_obf_xss_alert: 1
+  - kw_obf_xss_eval: 1
+  - kw_xss_svg: 1
+  - kw_obf_xss_svg: 1
+  - kw_obf_xss_img: 1
+  - kw_obf_command_injection_cat: 1
+  - kw_obf_command_injection_ls: 1
+  - kw_obf_command_injection_curl: 1
+  - length: 592
+  - special_char_ratio: 0.28040540540540543
+  - digit_ratio: 0.08108108108108109
+  - alpha_ratio: 0.6385135135135135
+------------------------------------------------------------
+🚫 ACTION: BLOCKED | Confidence: 83.14%
+============================================================
+
+127.0.0.1 - - [21/Dec/2025 12:45:16] "[31m[1mGET /favicon.ico HTTP/1.1[0m" 403 -
+
+============================================================
+Incoming Request: GET /indrx.html
+------------------------------------------------------------
+
+Analyzing payload: GET /indrx.html HTTP/1.1
+Host: localhost:5000
+Connection: keep-alive
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Brave";v="141", "Not?A_Brand";v="8", "Chromium";v="141"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Linux"
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8
+Sec-Gpc: 1
+Accept-Language: en-GB,en;q=0.5
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br, zstd
+Cookie: __test=1
+
+
+
+🚨 DETECTED: ATTACK/BYPASS | Confidence: 14.07%
+Key extracted features (non-zero):
+  - obf_concatenation_count: 1
+  - payload_entropy: 5.4745162297088985
+  - charset_mixed: 1
+  - case_variation: 0.676056338028169
+  - kw_obf_sqli_insert: 1
+  - kw_obf_sqli_exec: 1
+  - kw_obf_sqli_where: 1
+  - kw_obf_xss_alert: 1
+  - kw_obf_xss_svg: 1
+  - kw_obf_xss_img: 1
+  - kw_command_injection_cat: 1
+  - kw_obf_command_injection_cat: 1
+  - kw_obf_command_injection_ls: 1
+  - kw_obf_command_injection_curl: 1
+  - length: 651
+  - special_char_ratio: 0.27035330261136714
+  - digit_ratio: 0.07526881720430108
+  - alpha_ratio: 0.6543778801843319
+------------------------------------------------------------
+🚫 ACTION: BLOCKED | Confidence: 14.07%
+============================================================
+
+127.0.0.1 - - [21/Dec/2025 12:45:17] "[31m[1mGET /indrx.html HTTP/1.1[0m" 403 -
+
+============================================================
+Incoming Request: GET /favicon.ico
+------------------------------------------------------------
+
+Analyzing payload: GET /favicon.ico HTTP/1.1
+Host: localhost:5000
+Connection: keep-alive
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Brave";v="141", "Not?A_Brand";v="8", "Chromium";v="141"
+Sec-Ch-Ua-Mobile: ?0
+Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+Sec-Gpc: 1
+Accept-Language: en-GB,en;q=0.5
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: no-cors
+Sec-Fetch-Dest: image
+Referer: http://localhost:5000/indrx.html
+Accept-Encoding: gzip, deflate, br, zstd
+Cookie: __test=1
+
+
+
+🚨 DETECTED: ATTACK/BYPASS | Confidence: 83.14%
+Key extracted features (non-zero):
+  - obf_comment_injection_count: 1
+  - obf_concatenation_count: 1
+  - payload_entropy: 5.479948294240377
+  - charset_mixed: 1
+  - case_variation: 0.671957671957672
+  - kw_obf_sqli_exec: 1
+  - kw_obf_sqli_from: 1
+  - kw_obf_sqli_where: 1
+  - kw_obf_xss_alert: 1
+  - kw_obf_xss_eval: 1
+  - kw_xss_svg: 1
+  - kw_obf_xss_svg: 1
+  - kw_obf_xss_img: 1
+  - kw_obf_command_injection_cat: 1
+  - kw_obf_command_injection_ls: 1
+  - kw_obf_command_injection_curl: 1
+  - length: 592
+  - special_char_ratio: 0.28040540540540543
+  - digit_ratio: 0.08108108108108109
+  - alpha_ratio: 0.6385135135135135
+------------------------------------------------------------
+🚫 ACTION: BLOCKED | Confidence: 83.14%
+============================================================
+
+127.0.0.1 - - [21/Dec/2025 12:45:17] "[31m[1mGET /favicon.ico HTTP/1.1[0m" 403 -
+
+============================================================
+Incoming Request: GET /indrx.html
+------------------------------------------------------------
+
+Analyzing payload: GET /indrx.html HTTP/1.1
+Host: localhost:5000
+Connection: keep-alive
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Brave";v="141", "Not?A_Brand";v="8", "Chromium";v="141"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Linux"
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8
+Sec-Gpc: 1
+Accept-Language: en-GB,en;q=0.5
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br, zstd
+Cookie: __test=1
+
+
+
+🚨 DETECTED: ATTACK/BYPASS | Confidence: 14.07%
+Key extracted features (non-zero):
+  - obf_concatenation_count: 1
+  - payload_entropy: 5.4745162297088985
+  - charset_mixed: 1
+  - case_variation: 0.676056338028169
+  - kw_obf_sqli_insert: 1
+  - kw_obf_sqli_exec: 1
+  - kw_obf_sqli_where: 1
+  - kw_obf_xss_alert: 1
+  - kw_obf_xss_svg: 1
+  - kw_obf_xss_img: 1
+  - kw_command_injection_cat: 1
+  - kw_obf_command_injection_cat: 1
+  - kw_obf_command_injection_ls: 1
+  - kw_obf_command_injection_curl: 1
+  - length: 651
+  - special_char_ratio: 0.27035330261136714
+  - digit_ratio: 0.07526881720430108
+  - alpha_ratio: 0.6543778801843319
+------------------------------------------------------------
+🚫 ACTION: BLOCKED | Confidence: 14.07%
+============================================================
+
+127.0.0.1 - - [21/Dec/2025 12:45:17] "[31m[1mGET /indrx.html HTTP/1.1[0m" 403 -
+
+============================================================
+Incoming Request: GET /favicon.ico
+------------------------------------------------------------
+
+Analyzing payload: GET /favicon.ico HTTP/1.1
+Host: localhost:5000
+Connection: keep-alive
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Brave";v="141", "Not?A_Brand";v="8", "Chromium";v="141"
+Sec-Ch-Ua-Mobile: ?0
+Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+Sec-Gpc: 1
+Accept-Language: en-GB,en;q=0.5
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: no-cors
+Sec-Fetch-Dest: image
+Referer: http://localhost:5000/indrx.html
+Accept-Encoding: gzip, deflate, br, zstd
+Cookie: __test=1
+
+
+
+============================================================
+Incoming Request: GET /indrx.html
+------------------------------------------------------------
+
+Analyzing payload: GET /indrx.html HTTP/1.1
+Host: localhost:5000
+Connection: keep-alive
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Brave";v="141", "Not?A_Brand";v="8", "Chromium";v="141"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Linux"
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8
+Sec-Gpc: 1
+Accept-Language: en-GB,en;q=0.5
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br, zstd
+Cookie: __test=1
+
+
+
+🚨 DETECTED: ATTACK/BYPASS | Confidence: 83.14%
+Key extracted features (non-zero):
+  - obf_comment_injection_count: 1
+  - obf_concatenation_count: 1
+  - payload_entropy: 5.479948294240377
+  - charset_mixed: 1
+  - case_variation: 0.671957671957672
+  - kw_obf_sqli_exec: 1
+  - kw_obf_sqli_from: 1
+  - kw_obf_sqli_where: 1
+  - kw_obf_xss_alert: 1
+  - kw_obf_xss_eval: 1
+  - kw_xss_svg: 1
+  - kw_obf_xss_svg: 1
+  - kw_obf_xss_img: 1
+  - kw_obf_command_injection_cat: 1
+  - kw_obf_command_injection_ls: 1
+  - kw_obf_command_injection_curl: 1
+  - length: 592
+  - special_char_ratio: 0.28040540540540543
+  - digit_ratio: 0.08108108108108109
+  - alpha_ratio: 0.6385135135135135
+------------------------------------------------------------
+🚫 ACTION: BLOCKED | Confidence: 83.14%
+============================================================
+
+127.0.0.1 - - [21/Dec/2025 12:45:17] "[31m[1mGET /favicon.ico HTTP/1.1[0m" 403 -
+
+🚨 DETECTED: ATTACK/BYPASS | Confidence: 14.07%
+Key extracted features (non-zero):
+  - obf_concatenation_count: 1
+  - payload_entropy: 5.4745162297088985
+  - charset_mixed: 1
+  - case_variation: 0.676056338028169
+  - kw_obf_sqli_insert: 1
+  - kw_obf_sqli_exec: 1
+  - kw_obf_sqli_where: 1
+  - kw_obf_xss_alert: 1
+  - kw_obf_xss_svg: 1
+  - kw_obf_xss_img: 1
+  - kw_command_injection_cat: 1
+  - kw_obf_command_injection_cat: 1
+  - kw_obf_command_injection_ls: 1
+  - kw_obf_command_injection_curl: 1
+  - length: 651
+  - special_char_ratio: 0.27035330261136714
+  - digit_ratio: 0.07526881720430108
+  - alpha_ratio: 0.6543778801843319
+------------------------------------------------------------
+🚫 ACTION: BLOCKED | Confidence: 14.07%
+============================================================
+
+127.0.0.1 - - [21/Dec/2025 12:45:17] "[31m[1mGET /indrx.html HTTP/1.1[0m" 403 -
+
+============================================================
+Incoming Request: GET /indrx.html
+------------------------------------------------------------
+
+Analyzing payload: GET /indrx.html HTTP/1.1
+Host: localhost:5000
+Connection: keep-alive
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Brave";v="141", "Not?A_Brand";v="8", "Chromium";v="141"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Linux"
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8
+Sec-Gpc: 1
+Accept-Language: en-GB,en;q=0.5
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br, zstd
+Cookie: __test=1
+
+
+
+============================================================
+Incoming Request: GET /favicon.ico
+------------------------------------------------------------
+
+Analyzing payload: GET /favicon.ico HTTP/1.1
+Host: localhost:5000
+Connection: keep-alive
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Brave";v="141", "Not?A_Brand";v="8", "Chromium";v="141"
+Sec-Ch-Ua-Mobile: ?0
+Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+Sec-Gpc: 1
+Accept-Language: en-GB,en;q=0.5
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: no-cors
+Sec-Fetch-Dest: image
+Referer: http://localhost:5000/indrx.html
+Accept-Encoding: gzip, deflate, br, zstd
+Cookie: __test=1
+
+
+
+🚨 DETECTED: ATTACK/BYPASS | Confidence: 14.07%
+Key extracted features (non-zero):
+  - obf_concatenation_count: 1
+  - payload_entropy: 5.4745162297088985
+  - charset_mixed: 1
+  - case_variation: 0.676056338028169
+  - kw_obf_sqli_insert: 1
+  - kw_obf_sqli_exec: 1
+  - kw_obf_sqli_where: 1
+  - kw_obf_xss_alert: 1
+  - kw_obf_xss_svg: 1
+  - kw_obf_xss_img: 1
+  - kw_command_injection_cat: 1
+  - kw_obf_command_injection_cat: 1
+  - kw_obf_command_injection_ls: 1
+  - kw_obf_command_injection_curl: 1
+  - length: 651
+  - special_char_ratio: 0.27035330261136714
+  - digit_ratio: 0.07526881720430108
+  - alpha_ratio: 0.6543778801843319
+------------------------------------------------------------
+🚫 ACTION: BLOCKED | Confidence: 14.07%
+============================================================
+
+127.0.0.1 - - [21/Dec/2025 12:45:18] "[31m[1mGET /indrx.html HTTP/1.1[0m" 403 -
+
+🚨 DETECTED: ATTACK/BYPASS | Confidence: 83.14%
+Key extracted features (non-zero):
+  - obf_comment_injection_count: 1
+  - obf_concatenation_count: 1
+  - payload_entropy: 5.479948294240377
+  - charset_mixed: 1
+  - case_variation: 0.671957671957672
+  - kw_obf_sqli_exec: 1
+  - kw_obf_sqli_from: 1
+  - kw_obf_sqli_where: 1
+  - kw_obf_xss_alert: 1
+  - kw_obf_xss_eval: 1
+  - kw_xss_svg: 1
+  - kw_obf_xss_svg: 1
+  - kw_obf_xss_img: 1
+  - kw_obf_command_injection_cat: 1
+  - kw_obf_command_injection_ls: 1
+  - kw_obf_command_injection_curl: 1
+  - length: 592
+  - special_char_ratio: 0.28040540540540543
+  - digit_ratio: 0.08108108108108109
+  - alpha_ratio: 0.6385135135135135
+------------------------------------------------------------
+🚫 ACTION: BLOCKED | Confidence: 83.14%
+============================================================
+
+127.0.0.1 - - [21/Dec/2025 12:45:18] "[31m[1mGET /favicon.ico HTTP/1.1[0m" 403 -
+
+============================================================
+Incoming Request: GET /favicon.ico
+------------------------------------------------------------
+
+Analyzing payload: GET /favicon.ico HTTP/1.1
+Host: localhost:5000
+Connection: keep-alive
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Brave";v="141", "Not?A_Brand";v="8", "Chromium";v="141"
+Sec-Ch-Ua-Mobile: ?0
+Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+Sec-Gpc: 1
+Accept-Language: en-GB,en;q=0.5
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: no-cors
+Sec-Fetch-Dest: image
+Referer: http://localhost:5000/indrx.html
+Accept-Encoding: gzip, deflate, br, zstd
+Cookie: __test=1
+
+
+
+============================================================
+Incoming Request: GET /indrx.html
+------------------------------------------------------------
+
+Analyzing payload: GET /indrx.html HTTP/1.1
+Host: localhost:5000
+Connection: keep-alive
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Brave";v="141", "Not?A_Brand";v="8", "Chromium";v="141"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Linux"
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8
+Sec-Gpc: 1
+Accept-Language: en-GB,en;q=0.5
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br, zstd
+Cookie: __test=1
+
+
+
+🚨 DETECTED: ATTACK/BYPASS | Confidence: 83.14%
+Key extracted features (non-zero):
+  - obf_comment_injection_count: 1
+  - obf_concatenation_count: 1
+  - payload_entropy: 5.479948294240377
+  - charset_mixed: 1
+  - case_variation: 0.671957671957672
+  - kw_obf_sqli_exec: 1
+  - kw_obf_sqli_from: 1
+  - kw_obf_sqli_where: 1
+  - kw_obf_xss_alert: 1
+  - kw_obf_xss_eval: 1
+  - kw_xss_svg: 1
+  - kw_obf_xss_svg: 1
+  - kw_obf_xss_img: 1
+  - kw_obf_command_injection_cat: 1
+  - kw_obf_command_injection_ls: 1
+  - kw_obf_command_injection_curl: 1
+  - length: 592
+  - special_char_ratio: 0.28040540540540543
+  - digit_ratio: 0.08108108108108109
+  - alpha_ratio: 0.6385135135135135
+------------------------------------------------------------
+🚫 ACTION: BLOCKED | Confidence: 83.14%
+============================================================
+
+127.0.0.1 - - [21/Dec/2025 12:45:18] "[31m[1mGET /favicon.ico HTTP/1.1[0m" 403 -
+
+🚨 DETECTED: ATTACK/BYPASS | Confidence: 14.07%
+Key extracted features (non-zero):
+  - obf_concatenation_count: 1
+  - payload_entropy: 5.4745162297088985
+  - charset_mixed: 1
+  - case_variation: 0.676056338028169
+  - kw_obf_sqli_insert: 1
+  - kw_obf_sqli_exec: 1
+  - kw_obf_sqli_where: 1
+  - kw_obf_xss_alert: 1
+  - kw_obf_xss_svg: 1
+  - kw_obf_xss_img: 1
+  - kw_command_injection_cat: 1
+  - kw_obf_command_injection_cat: 1
+  - kw_obf_command_injection_ls: 1
+  - kw_obf_command_injection_curl: 1
+  - length: 651
+  - special_char_ratio: 0.27035330261136714
+  - digit_ratio: 0.07526881720430108
+  - alpha_ratio: 0.6543778801843319
+------------------------------------------------------------
+🚫 ACTION: BLOCKED | Confidence: 14.07%
+============================================================
+
+127.0.0.1 - - [21/Dec/2025 12:45:18] "[31m[1mGET /indrx.html HTTP/1.1[0m" 403 -
+
+============================================================
+Incoming Request: GET /favicon.ico
+------------------------------------------------------------
+
+Analyzing payload: GET /favicon.ico HTTP/1.1
+Host: localhost:5000
+Connection: keep-alive
+Sec-Ch-Ua-Platform: "Linux"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+Sec-Ch-Ua: "Brave";v="141", "Not?A_Brand";v="8", "Chromium";v="141"
+Sec-Ch-Ua-Mobile: ?0
+Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+Sec-Gpc: 1
+Accept-Language: en-GB,en;q=0.5
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: no-cors
+Sec-Fetch-Dest: image
+Referer: http://localhost:5000/indrx.html
+Accept-Encoding: gzip, deflate, br, zstd
+Cookie: __test=1
+
+
+
+🚨 DETECTED: ATTACK/BYPASS | Confidence: 83.14%
+Key extracted features (non-zero):
+  - obf_comment_injection_count: 1
+  - obf_concatenation_count: 1
+  - payload_entropy: 5.479948294240377
+  - charset_mixed: 1
+  - case_variation: 0.671957671957672
+  - kw_obf_sqli_exec: 1
+  - kw_obf_sqli_from: 1
+  - kw_obf_sqli_where: 1
+  - kw_obf_xss_alert: 1
+  - kw_obf_xss_eval: 1
+  - kw_xss_svg: 1
+  - kw_obf_xss_svg: 1
+  - kw_obf_xss_img: 1
+  - kw_obf_command_injection_cat: 1
+  - kw_obf_command_injection_ls: 1
+  - kw_obf_command_injection_curl: 1
+  - length: 592
+  - special_char_ratio: 0.28040540540540543
+  - digit_ratio: 0.08108108108108109
+  - alpha_ratio: 0.6385135135135135
+------------------------------------------------------------
+🚫 ACTION: BLOCKED | Confidence: 83.14%
+============================================================
+
+127.0.0.1 - - [21/Dec/2025 12:45:18] "[31m[1mGET /favicon.ico HTTP/1.1[0m" 403 -
