@@ -1,7 +1,7 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useWebSocket } from '../context/WebSocketContext';
-import { LayoutDashboard, Shield, Activity, LogOut, Server } from 'lucide-react';
+import { LayoutDashboard, Shield, Activity, LogOut, Server, Bug } from 'lucide-react';
 import { cn } from './ui/button';
 
 const Layout = () => {
@@ -13,6 +13,7 @@ const Layout = () => {
         { href: '/dashboard', label: 'Overview', icon: LayoutDashboard },
         { href: '/honeypots', label: 'Honeypots', icon: Server },
         { href: '/observability', label: 'Observability', icon: Activity },
+        { href: '/cves', label: 'Vulnerabilities', icon: Bug },
     ];
 
     return (

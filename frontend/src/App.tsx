@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Honeypots from './pages/Honeypots';
 import Observability from './pages/Observability';
+import CVEs from './pages/CVEs';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -21,6 +22,7 @@ function App() {
                             <Route path="/dashboard" element={<Dashboard />} />
                             <Route path="/honeypots" element={<Honeypots />} />
                             <Route path="/observability" element={<Observability />} />
+                            <Route path="/cves" element={<CVEs />} />
                         </Route>
                     </Routes>
                 </WebSocketProvider>
