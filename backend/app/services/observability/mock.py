@@ -7,6 +7,7 @@ from app.models.observability import HoneypotMetrics, MetricPoint, LogEntry, Ses
 class MockObservabilityService(ObservabilityService):
     def __init__(self):
         self._sessions: List[SessionLog] = []
+        self._logs: List[LogEntry] = []
 
     def get_metrics(self, honeypot_id: str, time_range: str = "1h") -> HoneypotMetrics:
         now = datetime.utcnow()
@@ -34,6 +35,9 @@ class MockObservabilityService(ObservabilityService):
         )
 
     def get_logs(self, honeypot_id: str, limit: int = 100) -> List[LogEntry]:
+        if self._logs:
+            return sorted(self._logs, key=lambda x: x.timestamp, reverse=True)[:limit]
+            
         logs = []
         now = datetime.utcnow()
         levels = ["INFO", "WARNING", "ERROR"]
@@ -57,6 +61,10 @@ class MockObservabilityService(ObservabilityService):
         
         logs.sort(key=lambda x: x.timestamp, reverse=True)
         return logs
+
+    def ingest_log(self, log_data: LogEntry) -> bool:
+        self._logs.append(log_data)
+        return True
 
     def ingest_session_log(self, session_data: SessionLog) -> bool:
         self._sessions.append(session_data)

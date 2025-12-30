@@ -14,6 +14,11 @@ class ObservabilityService(ABC):
         pass
 
     @abstractmethod
+    def ingest_log(self, log_data: LogEntry) -> bool:
+        """Ingest a system log from a honeypot."""
+        pass
+
+    @abstractmethod
     def ingest_session_log(self, session_data: SessionLog) -> bool:
         """Ingest a session log from a honeypot."""
         pass

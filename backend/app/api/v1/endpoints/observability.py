@@ -30,6 +30,40 @@ async def receive_alert(alert: dict):
     await manager.broadcast(event)
     return {"status": "broadcasted"}
 
+@router.post("/events/")
+async def receive_event(event_data: dict):
+    """
+    Receive a generic event (e.g. session_start, session_end) and broadcast it.
+    """
+    # Add timestamp if missing
+    if "timestamp" not in event_data:
+        event_data["timestamp"] = datetime.utcnow().isoformat()
+        
+    await manager.broadcast(event_data)
+    return {"status": "broadcasted"}
+
+@router.post("/logs", response_model=dict)
+async def ingest_log(
+    log_data: LogEntry,
+    service: ObservabilityService = Depends(get_observability_service)
+):
+    """
+    Ingest a system log.
+    """
+    service.ingest_log(log_data)
+    
+    # Also broadcast for real-time view
+    event = {
+        "type": "system_log",
+        "payload": log_data.dict(),
+        "timestamp": datetime.utcnow().isoformat()
+    }
+    # Convert datetime objects to string for JSON serialization
+    event["payload"]["timestamp"] = event["payload"]["timestamp"].isoformat()
+    
+    await manager.broadcast(event)
+    return {"status": "ingested"}
+
 @router.get("/metrics", response_model=HoneypotMetrics)
 def get_metrics(
     honeypot_id: str,
