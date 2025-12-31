@@ -39,8 +39,15 @@ docker-compose.override.yml
 *.bin
 *.h5
 *.onnx
+*.pt
+*.pth
 shelLM/
-ecommerce/models/*.pkl
+waf/
+ecommerce/models/
+
+# Specific large files found
+waf_bypass_detector_complete.pkl
+waf_feature_extractor.pkl
 
 # OS
 .DS_Store
@@ -65,3 +72,7 @@ yarn-error.log*
 .coverage
 htmlcov/
 .pytest_cache/
+backend/app.db
+frontend/node_modules/
+backend/app.db
+frontend/node_modules/
