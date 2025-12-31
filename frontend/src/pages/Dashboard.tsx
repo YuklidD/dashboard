@@ -4,6 +4,7 @@ import { useWebSocket } from '../context/WebSocketContext';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { ShieldAlert, Activity, Server, Users } from 'lucide-react';
 import api from '../services/api';
+import AttackMap from '../components/AttackMap';
 
 const Dashboard = () => {
     const { lastMessage } = useWebSocket();
@@ -21,7 +22,11 @@ const Dashboard = () => {
             try {
                 const honeypots = await api.get('/honeypots');
                 setStats(prev => ({ ...prev, activeHoneypots: honeypots.data.length }));
-                // Mock other stats for now or fetch from metrics endpoint
+
+                // Fetch recent alerts
+                const alertsRes = await api.get('/observability/alerts');
+                setAlerts(alertsRes.data);
+                setStats(prev => ({ ...prev, totalAttacks: alertsRes.data.length }));
             } catch (error) {
                 console.error("Failed to fetch stats", error);
             }
@@ -39,7 +44,7 @@ const Dashboard = () => {
     useEffect(() => {
         if (lastMessage) {
             if (lastMessage.type === 'waf_bypass') {
-                setAlerts(prev => [lastMessage.payload, ...prev].slice(0, 5));
+                setAlerts(prev => [lastMessage.payload, ...prev].slice(0, 50));
                 setStats(prev => ({ ...prev, totalAttacks: prev.totalAttacks + 1 }));
             }
         }
@@ -110,7 +115,7 @@ const Dashboard = () => {
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="space-y-4">
+                        <div className="space-y-4 h-[300px] overflow-y-auto pr-2">
                             {alerts.length === 0 ? (
                                 <p className="text-sm text-muted-foreground">No recent alerts.</p>
                             ) : (
@@ -122,7 +127,7 @@ const Dashboard = () => {
                                                 WAF Bypass Detected
                                             </p>
                                             <p className="text-xs text-muted-foreground">
-                                                Source: {alert.source_ip || 'Unknown'}
+                                                Source: {alert.source_ip || 'Unknown'} {alert.country ? `(${alert.country})` : ''}
                                             </p>
                                             <p className="text-xs text-muted-foreground">
                                                 Payload: {alert.payload || 'N/A'}
@@ -135,6 +140,23 @@ const Dashboard = () => {
                     </CardContent>
                 </Card>
             </div>
+
+            {/* Attack Map Section */}
+            <Card>
+                <CardHeader>
+                    <CardTitle>Global Attack Map</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    {/* Pass real alerts/attacks to map. For demo we mock some distribution if empty */}
+                    <AttackMap attacks={alerts.map(a => ({
+                        latitude: a.latitude || (Math.random() * 100 - 50),
+                        longitude: a.longitude || (Math.random() * 360 - 180),
+                        country: a.country || 'Unknown',
+                        ip: a.source_ip || '127.0.0.1',
+                        type: 'WAF Bypass'
+                    }))} />
+                </CardContent>
+            </Card>
         </div>
     );
 };

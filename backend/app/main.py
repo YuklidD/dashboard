@@ -5,6 +5,8 @@ from app.core.config import settings
 from app.api.v1.api import api_router
 from app.core.database import engine, Base, SessionLocal
 from app.models.user import User, UserRole
+from app.models.alert import Alert
+from app.models.session import HoneypotSession
 from app.core.security import get_password_hash
 
 # Create tables
@@ -45,6 +47,7 @@ async def create_initial_data():
     db.close()
     
     if settings.ENVIRONMENT == "local":
+        print(f"ENVIRONMENT is {settings.ENVIRONMENT}, starting simulation...")
         asyncio.create_task(start_simulation())
 
 @app.get("/")

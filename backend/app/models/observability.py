@@ -27,4 +27,6 @@ class SessionLog(BaseModel):
     start_time: datetime
     end_time: Optional[datetime] = None
     attacker_ip: str
+    country: Optional[str] = None
+    mitre_techniques: Optional[str] = None
     commands: List[Dict[str, Any]] # e.g., {"timestamp": ..., "input": ..., "output": ...}
