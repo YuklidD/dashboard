@@ -72,3 +72,5 @@ yarn-error.log*
 .coverage
 htmlcov/
 .pytest_cache/
+backend/app.db
+frontend/node_modules/
