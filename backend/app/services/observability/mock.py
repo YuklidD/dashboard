@@ -63,6 +63,32 @@ class MockObservabilityService(ObservabilityService):
         return True
 
     def get_sessions(self, honeypot_id: Optional[str] = None) -> List[SessionLog]:
-        if honeypot_id:
-            return [s for s in self._sessions if s.honeypot_id == honeypot_id]
-        return self._sessions
+        from app.core.database import SessionLocal
+        from app.models.session import HoneypotSession
+        import json
+        
+        db = SessionLocal()
+        try:
+            query = db.query(HoneypotSession)
+            if honeypot_id:
+                query = query.filter(HoneypotSession.honeypot_type == honeypot_id)
+            
+            sessions = query.order_by(HoneypotSession.start_time.desc()).limit(20).all()
+            
+            return [
+                SessionLog(
+                    session_id=s.session_id,
+                    honeypot_id=s.honeypot_type,
+                    start_time=s.start_time,
+                    end_time=s.end_time,
+                    attacker_ip=s.source_ip,
+                    country=s.country,
+                    mitre_techniques=s.mitre_techniques,
+                    commands=json.loads(s.commands) if s.commands else []
+                ) for s in sessions
+            ]
+        except Exception as e:
+            print(f"Error fetching sessions: {e}")
+            return []
+        finally:
+            db.close()

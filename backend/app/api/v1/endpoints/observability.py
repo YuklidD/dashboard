@@ -3,12 +3,27 @@ from fastapi import APIRouter, Depends, HTTPException
 from app.api import deps
 from app.models.user import User
 from app.models.observability import HoneypotMetrics, LogEntry, SessionLog
+from app.models.alert import Alert
+from sqlalchemy.orm import Session
 from app.services.observability.factory import get_observability_service
 from app.services.observability.base import ObservabilityService
 from app.core.websockets import manager
 from datetime import datetime
 
 router = APIRouter()
+
+from app.schemas.alert import Alert as AlertSchema
+
+@router.get("/alerts", response_model=List[AlertSchema])
+def get_alerts(
+    limit: int = 50,
+    current_user: User = Depends(deps.get_current_active_user),
+    db: Session = Depends(deps.get_db)  # Need to add db dependency import
+):
+    """
+    Get recent alerts for the dashboard.
+    """
+    return db.query(Alert).order_by(Alert.timestamp.desc()).limit(limit).all()
 
 @router.post("/alerts/")
 async def receive_alert(alert: dict):

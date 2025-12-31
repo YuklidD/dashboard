@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, Text, Float
 from datetime import datetime
-from ..database import Base
+from app.core.database import Base
 
 class HoneypotSession(Base):
     __tablename__ = "honeypot_sessions"
@@ -17,3 +17,13 @@ class HoneypotSession(Base):
     threat_score = Column(Float, default=0.0)
     status = Column(String, default="active")  # active, terminated, timeout
     pod_name = Column(String, nullable=True)
+    
+    # Geolocation
+    latitude = Column(Float, nullable=True)
+    longitude = Column(Float, nullable=True)
+    country = Column(String, nullable=True)
+    city = Column(String, nullable=True)
+    
+    # MITRE ATT&CK
+    mitre_techniques = Column(String, nullable=True)  # JSON string of matched techniques
+    commands = Column(Text, nullable=True) # JSON string of commands

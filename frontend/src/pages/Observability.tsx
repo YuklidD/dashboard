@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
-import { Terminal, FileText } from 'lucide-react';
+import { FileText } from 'lucide-react';
 import api from '../services/api';
 
 const Observability = () => {
@@ -29,21 +29,37 @@ const Observability = () => {
         <div className="space-y-6">
             <h2 className="text-3xl font-bold tracking-tight">Observability & Forensics</h2>
 
-            <div className="flex space-x-2 border-b">
-                <button
-                    className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${activeTab === 'logs' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground'
-                        }`}
-                    onClick={() => setActiveTab('logs')}
-                >
-                    System Logs
-                </button>
-                <button
-                    className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${activeTab === 'sessions' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground'
-                        }`}
-                    onClick={() => setActiveTab('sessions')}
-                >
-                    sheLLM Sessions
-                </button>
+            <div className="flex justify-between items-end border-b pb-2">
+                <div className="flex space-x-2">
+                    <button
+                        className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${activeTab === 'logs' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground'
+                            }`}
+                        onClick={() => setActiveTab('logs')}
+                    >
+                        System Logs
+                    </button>
+                    <button
+                        className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${activeTab === 'sessions' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground'
+                            }`}
+                        onClick={() => setActiveTab('sessions')}
+                    >
+                        sheLLM Sessions
+                    </button>
+                </div>
+                <div className="flex gap-2">
+                    <button
+                        onClick={() => window.open('http://localhost:8000/api/v1/ioc/export?format=json', '_blank')}
+                        className="text-xs bg-secondary text-secondary-foreground hover:bg-secondary/80 px-3 py-1.5 rounded-md flex items-center gap-1"
+                    >
+                        Export JSON
+                    </button>
+                    <button
+                        onClick={() => window.open('http://localhost:8000/api/v1/ioc/export?format=csv', '_blank')}
+                        className="text-xs bg-primary text-primary-foreground hover:bg-primary/90 px-3 py-1.5 rounded-md flex items-center gap-1"
+                    >
+                        Export CSV
+                    </button>
+                </div>
             </div>
 
             {activeTab === 'logs' && (
@@ -60,7 +76,7 @@ const Observability = () => {
                                 <div key={i} className="mb-1">
                                     <span className="text-muted-foreground">[{log.timestamp}]</span>{' '}
                                     <span className={`${log.level === 'ERROR' ? 'text-red-500' :
-                                            log.level === 'WARNING' ? 'text-yellow-500' : 'text-green-500'
+                                        log.level === 'WARNING' ? 'text-yellow-500' : 'text-green-500'
                                         }`}>
                                         [{log.level}]
                                     </span>{' '}
@@ -81,9 +97,27 @@ const Observability = () => {
                         sessions.map((session, i) => (
                             <Card key={i}>
                                 <CardHeader>
-                                    <CardTitle className="text-sm font-medium flex justify-between">
-                                        <span>Session {session.session_id}</span>
-                                        <span className="text-muted-foreground">{session.start_time}</span>
+                                    <CardTitle className="text-sm font-medium flex flex-col gap-2">
+                                        <div className="flex justify-between items-center">
+                                            <span className="flex items-center gap-2">
+                                                Session {session.session_id}
+                                                {session.country && (
+                                                    <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-100">
+                                                        {session.country}
+                                                    </span>
+                                                )}
+                                            </span>
+                                            <span className="text-muted-foreground">{session.start_time}</span>
+                                        </div>
+                                        {session.mitre_techniques && (
+                                            <div className="flex flex-wrap gap-2 mt-1">
+                                                {JSON.parse(session.mitre_techniques).map((tech: any, t: number) => (
+                                                    <span key={t} className="text-xs border border-red-200 bg-red-50 text-red-700 px-2 py-0.5 rounded dark:bg-red-900/20 dark:border-red-800 dark:text-red-400">
+                                                        {tech.id}: {tech.name}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        )}
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
